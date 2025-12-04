@@ -3,9 +3,21 @@
     <div class="category-grid">
         {% for category in categories %}
             <a href="/products?category={{ category.id }}" class="category-card">
-                <div class="category-icon">📦</div>
+                {# <div class="category-icon"></div> #}
                 <div class="category-name">{{ category.name }}</div>
             </a>
         {% endfor %}
     </div>
 </section>
+
+{% schema %}
+{
+  "name": "Featured Categories",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Featured Categories"
+    }
+  ]
+}
+{% endschema %}

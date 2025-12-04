@@ -16,13 +16,14 @@ This project is a custom E-commerce storefront built with **Node.js**, **Express
 ### 2. Directory Structure
 
 ```
-├── data/               # Data layer (Products, Shop Info, Nav, Sections)
+├── core/               # System files
+│   ├── data/           # Data layer (Products, Shop Info, Nav, Sections)
+│   └── server/         # Express app configuration
 ├── public/             # Static assets (CSS, Images)
-├── server/             # Express app configuration
-└── views/              # Nunjucks templates
-    ├── layouts/        # Base layouts (layout.psp)
-    ├── sections/       # Reusable UI components (header, hero, etc.)
-    └── templates/      # Page templates (index, product, etc.)
+├── config/             # Layout configurations
+├── layouts/            # Base layouts (layout.psp)
+├── sections/           # Reusable UI components (header, hero, etc.)
+└── templates/          # Page templates (index, product, etc.)
 ```
 
 ## Key Features Implemented
@@ -47,7 +48,7 @@ We moved away from monolithic templates to a modular approach:
 ### C. Templating & Routing
 
 - **Dynamic Layout (`layout.psp`)**: Automatically loops through configured section groups to render the page structure.
-- **Routes (`server/app.js`)**:
+- **Routes (`core/server/app.js`)**:
   - `/`: Homepage
   - `/products`: Product listing with category filtering.
   - `/product/:id`: Detailed product view with variant selection.

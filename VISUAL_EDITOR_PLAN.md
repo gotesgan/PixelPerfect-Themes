@@ -6,7 +6,7 @@ Instead, we can build a **Custom Theme Editor** directly into your Express app.
 
 ## 1. Architecture
 
-- **No Database**: The "database" is your `views/config/*.json` files.
+- **No Database**: The "database" is your `config/*.json` files.
 - **No API Sync**: The editor reads/writes files directly.
 - **Schema Driven**: The editor parses the `{% schema %}` tags in your `.psp` files to generate the UI.
 
@@ -14,18 +14,18 @@ Instead, we can build a **Custom Theme Editor** directly into your Express app.
 
 We will use the open-source library **@json-editor/json-editor** to automatically generate forms from your schemas.
 
-### A. New Routes (`server/editor.js`)
+### A. New Routes (`core/server/editor.js`)
 
 1.  `GET /editor`:
-    - Reads `views/config/header.json` (and others).
-    - Parses all `views/sections/*.psp` to extract the JSON schemas.
+    - Reads `config/header.json` (and others).
+    - Parses all `sections/*.psp` to extract the JSON schemas.
     - Merges them into a master JSON Schema.
     - Renders the Editor UI.
 2.  `POST /editor/save`:
     - Receives the updated JSON payload.
-    - Writes it back to `views/config/header.json`.
+    - Writes it back to `config/header.json`.
 
-### B. The Editor UI (`views/editor.psp`)
+### B. The Editor UI (`templates/editor.psp`)
 
 A simple page containing:
 
@@ -47,7 +47,7 @@ _(We don't need heavy packages, just a way to parse POST requests)_
 
 ### Step 2: Create the Schema Parser
 
-We need a helper function in `server/utils.js` that:
+We need a helper function in `core/server/utils.js` that:
 
 1.  Reads a `.psp` file.
 2.  Extracts the text between `{% schema %}` and `{% endschema %}`.
@@ -58,7 +58,7 @@ We need a helper function in `server/utils.js` that:
 ```javascript
 app.get("/editor", (req, res) => {
   // 1. Get current config
-  const headerConfig = require("../views/config/header.json");
+  const headerConfig = require("../config/header.json");
 
   // 2. Get available sections & their schemas
   const sections = {};

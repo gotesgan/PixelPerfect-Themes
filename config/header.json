@@ -1,0 +1,23 @@
+{
+  "type": "header",
+  "name": "Header Group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "Free shipping on all orders over ₹999",
+        "link": "/products",
+        "background": "#121212",
+        "text_color": "#ffffff"
+      }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "sticky_header": "sticky",
+        "logo_width": 120
+      }
+    }
+  },
+  "order": ["announcement-bar", "header"]
+}

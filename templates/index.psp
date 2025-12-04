@@ -1,0 +1,6 @@
+{% extends "layouts/layout.psp" %}
+
+{% block content %}
+
+    {% sections indexGroup %}
+{% endblock %}

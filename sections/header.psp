@@ -1,0 +1,176 @@
+<header class="header section-header">
+  <div class="page-width">
+    <div class="header__content">
+      <div class="header__logo-wrapper">
+        <a href="/" class="header__logo-link">
+          {% if shop.logo %}
+            <img src="{{ shop.logo }}" alt="{{ shop.name }}" class="header__logo-image" width="{{ section.settings.logo_width }}">
+          {% else %}
+            <span class="header__logo-text">{{ shop.name }}</span>
+          {% endif %}
+        </a>
+      </div>
+
+      <nav class="header__inline-menu">
+        <ul class="header__menu-list">
+          {% for item in nav.header %}
+            <li>
+              <a href="{{ item.link }}" class="header__menu-item link link--text focus-inset">
+                <span>{{ item.name }}</span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+
+      <div class="header__icons">
+        <a href="/search" class="header__icon header__icon--search link focus-inset modal__toggle">
+          <svg class="icon icon-search" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </a>
+        <a href="/cart" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
+          <svg class="icon icon-cart" aria-hidden="true" focusable="false" role="presentation" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span class="visually-hidden">Cart</span>
+          <div class="cart-count-bubble">
+            <span aria-hidden="true">0</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .section-header {
+    position: {{ section.settings.sticky_header | default('sticky') }};
+    top: 0;
+    z-index: 1000;
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+
+  .header__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header__logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-foreground);
+  }
+
+  .header__logo-text {
+    font-family: var(--font-heading);
+    font-size: 2.4rem;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+  }
+
+  .header__menu-list {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header__menu-item {
+    font-size: 1.5rem;
+    color: var(--color-foreground);
+    text-decoration: none;
+    position: relative;
+    padding: 0.5rem 0;
+  }
+
+  .header__menu-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--color-foreground);
+    transition: width 0.3s ease;
+  }
+
+  .header__menu-item:hover::after {
+    width: 100%;
+  }
+
+  .header__icons {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .header__icon {
+    color: var(--color-foreground);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+
+  .header__icon:hover {
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 768px) {
+    .header__inline-menu {
+      display: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "select",
+      "id": "sticky_header",
+      "label": "Sticky Header",
+      "options": [
+        { "value": "sticky", "label": "On scroll up" },
+        { "value": "fixed", "label": "Always" },
+        { "value": "relative", "label": "None" }
+      ],
+      "default": "sticky"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 250,
+      "step": 10,
+      "default": 100,
+      "unit": "px",
+      "label": "Logo width"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 20
+    }
+  ]
+}
+{% endschema %}

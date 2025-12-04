@@ -1,0 +1,91 @@
+<div class="announcement-bar" role="region" aria-label="Announcement">
+  <div class="page-width">
+    <div class="announcement-bar__content">
+      {% if section.settings.link %}
+        <a href="{{ section.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+      {% endif %}
+          <p class="announcement-bar__message h5">
+            {{ section.settings.text | default("Welcome to our store") }}
+            {% if section.settings.link %}
+              <svg class="icon icon-arrow" width="12" height="12" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.537.808a.5.5 0 01.817-.162l4 4a.5.5 0 010 .708l-4 4a.5.5 0 11-.708-.708L11.793 5.5H1a.5.5 0 010-1h10.793L8.646 1.354a.5.5 0 01-.109-.546z" fill="currentColor"/>
+              </svg>
+            {% endif %}
+          </p>
+      {% if section.settings.link %}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .announcement-bar {
+    background-color: {{ section.settings.background }};
+    color: {{ section.settings.text_color }};
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 1rem 0;
+    text-align: center;
+    position: relative;
+    z-index: 1001;
+  }
+
+  .announcement-bar__message {
+    margin: 0;
+    font-size: 1.3rem;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .announcement-bar__link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .announcement-bar__link:hover {
+    opacity: 0.8;
+  }
+  
+  .icon-arrow {
+    transition: transform 0.2s ease;
+  }
+  
+  .announcement-bar__link:hover .icon-arrow {
+    transform: translateX(0.2rem);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement Text",
+      "default": "Welcome to our store"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    }
+  ]
+}
+{% endschema %}

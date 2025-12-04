@@ -1,0 +1,40 @@
+{
+  "type": "index",
+  "name": "Home Page",
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "heading": "New Arrivals",
+        "text": "Discover our latest collection of premium products designed for your lifestyle.",
+        "button_text": "Shop Now",
+        "button_link": "/products",
+        "image": "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        "section_height": 80,
+        "desktop_content_position": "middle-center",
+        "image_overlay_opacity": 20
+      }
+    },
+    "featured_collection": {
+      "type": "featured-products",
+      "settings": {
+        "heading": "Trending Now",
+        "limit": 4,
+        "show_view_all": true
+      }
+    },
+    "image_with_text": {
+      "type": "image-text",
+      "settings": {
+        "heading": "Our Story",
+        "text": "We believe in quality craftsmanship and sustainable materials. Every product is designed with care and attention to detail.",
+        "button_label": "Read More",
+        "button_link": "/about",
+        "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80",
+        "layout": "image_first",
+        "desktop_content_position": "middle"
+      }
+    }
+  },
+  "order": ["hero", "featured_collection", "image_with_text"]
+}

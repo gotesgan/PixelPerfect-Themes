@@ -2,10 +2,10 @@
   "name": "nunjucks-express-app",
   "version": "1.0.0",
   "description": "A Node.js Express application with Nunjucks templating engine",
-  "main": "server/app.js",
+  "main": "core/server/app.js",
   "scripts": {
-    "start": "node server/app.js",
-    "dev": "nodemon server/app.js"
+    "start": "node core/server/app.js",
+    "dev": "nodemon core/server/app.js"
   },
   "keywords": [
     "express",

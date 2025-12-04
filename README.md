@@ -6,18 +6,18 @@ A simple web application built with Node.js, Express.js, and Nunjucks templating
 
 ```
 project/
-├── server/
-│   └── app.js            # Express server configuration and routes
+├── core/
+│   └── server/
+│       └── app.js            # Express server configuration and routes
 ├── package.json          # Project dependencies and scripts
 ├── public/               # Static files (CSS, JS, images)
 │   └── style.css         # Main stylesheet
-├── views/                # Nunjucks template files (.psp)
-│   ├── layouts/          # Base layout files
-│   │   └── layout.psp
-│   └── templates/        # Page templates
-│       ├── index.psp
-│       ├── about.psp
-│       └── 404.psp
+├── layouts/              # Base layout files
+│   └── layout.psp
+├── templates/            # Page templates
+│   ├── index.psp
+│   ├── about.psp
+│   └── 404.psp
 └── README.md             # This file
 ```
 
@@ -70,9 +70,9 @@ The application will start on `http://localhost:3000`
 
 ### Adding New Pages
 
-1. Create a new `.psp` file in `views/templates/`
+1. Create a new `.psp` file in `templates/`
 2. Extend the layout: `{% extends "layouts/layout.psp" %}`
-3. Add a route in `server/app.js`
+3. Add a route in `core/server/app.js`
 
 ### Styling
 
@@ -80,7 +80,7 @@ Edit `public/style.css` to customize the appearance.
 
 ### Environment Variables
 
-Create a `.env` file (if needed) and update `server/app.js` to use `dotenv`:
+Create a `.env` file (if needed) and update `core/server/app.js` to use `dotenv`:
 
 ```bash
 npm install dotenv
