@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ title }} | {{ shop.name }}</title>
+        <link rel="icon" href="{{ shop.favicon }}" type="image/x-icon">
+        <link rel="stylesheet" href="/theme.css">
+    </head>
+    <body>
+        {% if headerGroup %}
+            {% for sectionId in headerGroup.order %}
+                {% set section = headerGroup.sections[sectionId] %}
+                {% include "sections/" + section.type + ".psp" ignore missing %}
+            {% endfor %}
+        {% endif %}
+        <main class="container"> {% block content %}{% endblock %}
+            </main>
+            <footer class="footer">
+                <div class="container">
+                    <div class="footer-grid">
+                        <div class="footer-section">
+                            <div class="footer-logo">{{ shop.name }}</div>
+                            <p class="footer-tagline">{{ shop.tagline }}</p>
+                            <p>{{ shop.address }}<br>{{ shop.city }}, {{ shop.state }}
+                                {{ shop.postalCode }}</p>
+                        </div>
+                        <div class="footer-section">
+                            <h4>Quick Links</h4>
+                            <ul>
+                                {% for item in nav.header %}
+                                    <li>
+                                        <a href="{{ item.link }}">{{ item.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="footer-section">
+                            <h4>Legal</h4>
+                            <ul>
+                                {% for item in nav.footer %}
+                                    <li>
+                                        <a href="{{ item.link }}">{{ item.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="footer-section">
+                            <h4>Contact</h4>
+                            <ul>
+                                <li>📞 {{ shop.phone }}</li>
+                                <li>📍 {{ shop.city }}, {{ shop.state }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <p>&copy; 2025 {{ shop.name }}. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
+        </body>
+    </html>

@@ -1,0 +1,25 @@
+{
+  "type": "header",
+  "name": "Header Group",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "settings": {}
+    },
+    "main-header": {
+      "type": "header",
+      "settings": {}
+    },
+    "category-bar": {
+      "type": "category-bar",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main-header",
+    "announcement-bar",
+      "category-bar"
+    
+  
+  ]
+}

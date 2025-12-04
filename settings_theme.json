@@ -1,0 +1,8 @@
+{
+  "name": "PixelPerfect PSP",
+  "description": "A lightweight Express + Nunjucks starter theme for quick storefront launches.",
+  "author": "PixelPerfect Labs",
+  "support_email": "support@pixelperfect.dev",
+  "support_documentation": "https://docs.pixelperfect.dev/themes/pixelperfect-psp",
+  "support_url": "https://pixelperfect.dev/contact"
+}

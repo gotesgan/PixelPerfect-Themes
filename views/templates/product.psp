@@ -1,0 +1,100 @@
+{% extends "layouts/layout.psp" %}
+{% block content %}
+    <div
+        class="product-detail mt-4">
+        <!-- Product Gallery -->
+        <div class="product-gallery">
+            <div class="product-main-image">
+                {% if product.images.length > 0 %}
+                    <img id="mainImage" src="{{ product.images[0].cdnUrl }}" alt="{{ product.images[0].altText }}">
+                    {% else %}
+                        <img src="https://via.placeholder.com/600" alt="{{ product.name }}">
+                        {% endif %}
+                    </div>
+                    {% if product.images.length > 1 %}
+                        <div class="product-thumbnails">
+                            {% for image in product.images %}
+                                <div class="product-thumbnail {% if loop.first %}active{% endif %}" onclick="changeImage('{{ image.cdnUrl }}', this)">
+                                    <img src="{{ image.cdnUrl }}" alt="{{ image.altText }}"></div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <!-- Product Info -->
+                    <div class="product-info-detail">
+                        <div class="product-category mb-1">
+                            {% for cat in categories %}
+                                {% if cat.id == product.category_id %}
+                                    {{ cat.name }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <h1>{{ product.name }}</h1>
+                        <div class="product-price">
+                            {% if product.variants.length > 0 %}
+                                <span class="price-current">₹{{ product.variants[0].price }}</span>
+                                <span class="text-sm text-gray-500 ml-2">(Tax included)</span>
+                            {% endif %}
+                        </div>
+                        <div class="product-description">
+                            <p>{{ product.description }}</p>
+                        </div>
+                        {% if product.options.length > 0 %}
+                            <div class="product-options">
+                                {% for option in product.options %}
+                                    <div class="option-group">
+                                        <label class="option-label">{{ option.name }}</label>
+                                        <div class="option-values">
+                                            {% for value in option.values %}
+                                                <button class="option-btn {% if loop.first %}selected{% endif %}">{{ value.value }}</button>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <div class="quantity-selector">
+                            <button class="quantity-btn" onclick="decrementQty()">-</button>
+                            <input type="number" id="quantity" value="1" min="1" class="quantity-input">
+                                <button class="quantity-btn" onclick="incrementQty()">+</button>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="btn btn-primary btn-lg flex-1">Add to Cart</button>
+                                <button class="btn btn-outline btn-lg">Buy Now</button>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-gray-200">
+                                <div class="flex gap-4 text-sm text-gray-600">
+                                    <div>
+                                        <strong>SKU:</strong>
+                                        {% if product.variants.length > 0 %}
+                                            {{ product.variants[0].sku }}
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <strong>Stock:</strong>
+                                        {% if product.variants.length > 0 %}
+                                            {% if product.variants[0].stock > 0 %}In Stock{% else %}Out of Stock{% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        function changeImage(src, element) {
+                            document.getElementById('mainImage').src = src;
+                            document.querySelectorAll('.product-thumbnail').forEach(el => el.classList.remove('active'));
+                            element.classList.add('active');
+                        }
+                        function incrementQty() {
+                            const input = document.getElementById('quantity');
+                            input.value = parseInt(input.value) + 1;
+                        }
+                        function decrementQty() {
+                            const input = document.getElementById('quantity');
+                            if (parseInt(input.value) > 1) {
+                                input.value = parseInt(input.value) - 1;
+                            }
+                        }
+                    </script>
+                {% endblock %}

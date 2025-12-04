@@ -12,10 +12,12 @@ project/
 ├── public/               # Static files (CSS, JS, images)
 │   └── style.css         # Main stylesheet
 ├── views/                # Nunjucks template files (.psp)
-│   ├── layout.psp        # Base template
-│   ├── index.psp         # Home page
-│   ├── about.psp         # About page
-│   └── 404.psp           # 404 error page
+│   ├── layouts/          # Base layout files
+│   │   └── layout.psp
+│   └── templates/        # Page templates
+│       ├── index.psp
+│       ├── about.psp
+│       └── 404.psp
 └── README.md             # This file
 ```
 
@@ -68,8 +70,8 @@ The application will start on `http://localhost:3000`
 
 ### Adding New Pages
 
-1. Create a new `.psp` file in the `views/` directory
-2. Extend the layout: `{% extends "layout.psp" %}`
+1. Create a new `.psp` file in `views/templates/`
+2. Extend the layout: `{% extends "layouts/layout.psp" %}`
 3. Add a route in `server/app.js`
 
 ### Styling

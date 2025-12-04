@@ -1,0 +1,21 @@
+
+
+<div class="announcement-bar">
+  <div class="container">
+    <p>{{ section.settings.text | default("🎉 Free shipping on all orders over ₹999! Shop now.") }}</p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement Text",
+      "default": "🎉 Free shipping on all orders over ₹999! Shop now."
+    }
+  ]
+}
+{% endschema %}
