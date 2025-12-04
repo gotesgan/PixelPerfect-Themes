@@ -1,0 +1,10 @@
+node_modules/
+npm-debug.log
+.DS_Store
+*.swp
+*.swo
+.env
+.vscode/settings.json
+.venv/
+__pycache__/
+.vscode/

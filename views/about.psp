@@ -1,0 +1,17 @@
+{% extends "layout.psp" %}
+{% block content %}
+    <div class="page-content">
+        <h2>{{ title }}</h2>
+        <p>{{ description }}</p>
+        <h3>About Nunjucks</h3>
+        <p>Nunjucks is a powerful templating engine for JavaScript. It's inspired by Jinja2 and brings familiar templating
+            concepts to the JavaScript world.</p>
+        <h3>Why Use Nunjucks?</h3>
+        <ul>
+            <li>Familiar syntax for developers coming from Python/Jinja2</li>
+            <li>Powerful features like inheritance and includes</li>
+            <li>Works both server-side and client-side</li>
+            <li>Great performance</li>
+        </ul>
+    </div>
+{% endblock %}
