@@ -1,100 +1,156 @@
-# Nunjucks + Express.js Application
+# PixelPerfect Themes Documentation
 
-A simple web application built with Node.js, Express.js, and Nunjucks templating engine.
+Welcome to the **PixelPerfect Themes** system documentation. This is a custom, modular e-commerce storefront architecture built on **Node.js**, **Express**, and **Nunjucks**. It mimics modern SaaS theme architectures (like Shopify) but runs on a lightweight, self-hosted stack.
 
-## Project Structure
+## 1. Core Architecture
+
+The system is designed around **Sections** and **JSON Configuration**.
+
+- **Framework**: Express.js
+- **Templating**: Nunjucks (custom `.psp` extension)
+- **Data Source**: Static JS files (`core/data/`) + JSON Config (`config/`)
+- **Styling**: CSS Variables & Scoped Styles
+
+### Directory Structure
 
 ```
-project/
-├── core/
-│   └── server/
-│       └── app.js            # Express server configuration and routes
-├── package.json          # Project dependencies and scripts
-├── public/               # Static files (CSS, JS, images)
-│   └── style.css         # Main stylesheet
-├── layouts/              # Base layout files
-│   └── layout.psp
-├── templates/            # Page templates
-│   ├── index.psp
-│   ├── about.psp
-│   └── 404.psp
-└── README.md             # This file
+├── config/            # Layout configurations (JSON)
+├── layouts/           # Base HTML wrappers
+├── sections/          # Reusable UI components (.psp)
+├── templates/         # Page templates (index, product, etc.)
+├── public/            # Static assets (CSS, Images)
+└── core/              # System files
+    ├── data/          # Business data (Products, Nav, Shop Info)
+    └── server/        # Backend logic
+        ├── config/    # Nunjucks & Extension setup
+        ├── routes/    # Express routes
+        ├── utils/     # Data loaders
+        └── app.js     # Entry point
 ```
 
-## Installation
+## 2. The Section System
 
-1. Install dependencies:
+Sections are the building blocks of the theme. Each section is a self-contained file in `sections/` containing:
 
-```bash
-npm install
+1.  **HTML/Nunjucks**: The markup.
+2.  **CSS**: `<style>` blocks (scoped by class naming conventions).
+3.  **Schema**: A `{% schema %}` JSON block defining settings and defaults.
+
+### Creating a Section
+
+Create a file `sections/my-section.psp`:
+
+```njk
+<style>
+  .my-section { padding: 20px; background: {{ section.settings.bg_color }}; }
+</style>
+
+<section class="my-section">
+  <h2>{{ section.settings.heading }}</h2>
+</section>
+
+{% schema %}
+{
+  "name": "My Custom Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading Text",
+      "default": "Hello World"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ]
+}
+{% endschema %}
 ```
 
-2. For development with auto-reload (requires nodemon):
+### The `{% schema %}` Tag
 
-```bash
-npm run dev
+The schema is the **Single Source of Truth** for default values.
+
+- You do **not** need to use `| default('value')` in your HTML.
+- The server automatically parses this block and injects defaults if no config is present.
+
+### Rendering a Section
+
+Use the custom tag in your templates:
+
+```njk
+{% section "my-section" %}
 ```
 
-3. For production:
+### Rendering a Group of Sections
 
-```bash
-npm start
+To render an entire group defined in a JSON config file (like `header.json` or `hero.json`), use the plural `{% sections %}` tag:
+
+```njk
+{# Renders all sections defined in config/header.json #}
+{% sections headerGroup %}
 ```
 
-## Usage
+This automatically handles the looping and ordering logic defined in the JSON file.
 
-The application will start on `http://localhost:3000`
+## 3. Configuration System
 
-### Routes
+Layouts are driven by JSON files in `config/`. These files define which sections appear and their specific settings.
 
-- **`/`** - Home page
-- **`/about`** - About page
-- **`404`** - Any undefined route shows a 404 page
+**Example: `config/hero.json`**
 
-## Features
-
-- **Express.js** - Fast, unopinionated web framework
-- **Nunjucks** - Powerful templating engine with inheritance and includes
-- **Static file serving** - CSS and other assets from `/public` directory
-- **Template inheritance** - `layout.psp` is the base template extended by other pages
-- **Responsive design** - Mobile-friendly CSS included
-
-## Nunjucks Features Used
-
-- Template inheritance (`extends`)
-- Block replacement (`block`)
-- Variables and expressions (`{{ }}`)
-- Control structures (available for future use)
-
-## Customization
-
-### Adding New Pages
-
-1. Create a new `.psp` file in `templates/`
-2. Extend the layout: `{% extends "layouts/layout.psp" %}`
-3. Add a route in `core/server/app.js`
-
-### Styling
-
-Edit `public/style.css` to customize the appearance.
-
-### Environment Variables
-
-Create a `.env` file (if needed) and update `core/server/app.js` to use `dotenv`:
-
-```bash
-npm install dotenv
+```json
+{
+  "type": "hero",
+  "name": "Hero Group",
+  "sections": {
+    "main-hero": {
+      "type": "hero-banner",
+      "settings": {
+        "heading": "Summer Sale",
+        "button_text": "Shop Now"
+      }
+    }
+  },
+  "order": ["main-hero"]
+}
 ```
 
-## Development
+- **Dynamic Loading**: The server loads these files into `app.locals[filename + 'Group']`.
+- **Usage in Templates**:
+  ```njk
+  {% for id in heroGroup.order %}
+      {% set section = heroGroup.sections[id] %}
+      {% section section.type %}
+  {% endfor %}
+  ```
 
-To make the server reload automatically when files change, the project uses `nodemon` (already listed as a dev dependency). After running `npm install`, start the watcher with:
+## 4. Data Layer
 
-```bash
-npm run dev
-```
+Global data is stored in `core/data/` and injected into every view.
 
-## Learn More
+- `shop`: Global store settings (name, logo, currency).
+- `nav`: Navigation menus.
+- `products`: Product catalog array.
 
-- [Express.js Documentation](https://expressjs.com/)
-- [Nunjucks Documentation](https://mozilla.github.io/nunjucks/)
+Access them globally: `{{ shop.name }}`, `{{ nav.header }}`.
+
+## 5. Server Internals
+
+The server logic is modularized in `core/server/`:
+
+- **`core/server/config/nunjucks.js`**:
+  - Registers the `{% schema %}` tag (swallows content so it doesn't render).
+  - Registers the `{% section %}` tag (handles file reading, schema parsing, default merging, and rendering).
+- **`core/server/utils/dataLoader.js`**: Loads static data and JSON configs.
+- **`core/server/routes/main.js`**: Handles standard routing (`/`, `/products`, `/page/:slug`).
+
+## 6. Development Workflow
+
+1.  **Add a Section**: Create `.psp` file in `sections/`. Define Schema.
+2.  **Use Section**: Add `{% section "name" %}` to a template OR add it to a JSON config file for dynamic rendering.
+3.  **Style**: Add styles directly in the section or in `public/theme.css`.
+4.  **Run**: `npm run dev` (starts server on port 3000).
