@@ -3,7 +3,7 @@
     <div class="image-with-text__grid grid grid--gapless grid--1-col grid--{% if section.settings.desktop_image_width == 'small' %}2-col-tablet{% else %}1-col-tablet-down{% endif %}">
       <div class="image-with-text__media-item grid__item">
         <div class="image-with-text__media image-with-text__media--{{ section.settings.height }} media global-media-settings {% if section.settings.image != blank %}media--transparent{% else %}placeholder{% endif %}"
-          {% if section.settings.height == 'adapt' and section.settings.image != blank %} style="padding-bottom: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%;"{% endif %}
+          {% if section.settings.height == 'adapt' and section.settings.image != blank %} style="padding-bottom: {{ (1 / section.settings.image.aspect_ratio * 100) }}%;"{% endif %}
         >
           {% if section.settings.image != blank %}
             <img

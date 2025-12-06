@@ -5,7 +5,7 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "settings": {
-        "text": "Free shipping on all orders over ₹999",
+        "text": "Free shipping on all orders over 299",
         "link": "/products",
         "background": "#121212",
         "text_color": "#ffffff"
@@ -17,7 +17,15 @@
         "sticky_header": "sticky",
         "logo_width": 120
       }
+    },
+    "featured-cat": {
+      "type": "featured-cat",
+      "settings": {
+        "category_1": "apparel",
+        "category_2": "electronics",
+        "category_3": "home-garden"
+      }
     }
   },
-  "order": ["announcement-bar", "header"]
+  "order": ["header", "announcement-bar", "featured-cat"]
 }
